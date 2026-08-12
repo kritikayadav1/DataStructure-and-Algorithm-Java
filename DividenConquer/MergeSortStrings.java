@@ -1,3 +1,5 @@
+package DividenConquer;
+
 public class MergeSortStrings {
 
     // Merge Sort function
