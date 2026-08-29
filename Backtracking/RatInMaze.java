@@ -1,4 +1,5 @@
-public class Solution {
+package Backtracking;
+public class RatInMaze {
 
     // Ye function solution matrix print karega
     public static void printSolution(int sol[][]) {
