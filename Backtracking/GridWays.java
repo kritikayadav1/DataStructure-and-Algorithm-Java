@@ -27,7 +27,7 @@ public class GridWays {
     public static void main(String[] args) {
 
         int n = 3;
-        int m = 3;
+        int m = 5;
 
         System.out.println(ways(0, 0, n, m));
     }

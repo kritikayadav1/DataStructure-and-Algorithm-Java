@@ -15,7 +15,7 @@ public class majorityElement {
             }
 
             if (count > arr.length / 2) {
-                return arr[i];
+                return arr[i];  
             }
         }
 

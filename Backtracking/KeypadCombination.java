@@ -1,62 +1,84 @@
 package Backtracking;
+
 public class KeypadCombination {
 
+    // 1. MAPPING BANAO
     // Har digit ke corresponding letters
-    final static char[][] L = {
-        {},                 // 0
-        {},                 // 1
-        {'a', 'b', 'c'},    // 2
-        {'d', 'e', 'f'},    // 3
-        {'g', 'h', 'i'},    // 4
-        {'j', 'k', 'l'},    // 5
-        {'m', 'n', 'o'},    // 6
-        {'p', 'q', 'r', 's'}, // 7
-        {'t', 'u', 'v'},    // 8
-        {'w', 'x', 'y', 'z'}  // 9
+    static String[] keypad = {
+        "",      // 0
+        "",      // 1
+        "abc",   // 2
+        "def",   // 3
+        "ghi",   // 4
+        "jkl",   // 5
+        "mno",   // 6
+        "pqrs",  // 7
+        "tuv",   // 8
+        "wxyz"   // 9
     };
 
-    public static void letterCombinations(String D) {
 
-        int len = D.length();
+    public static void combinations(String str, int index, String current) {
 
-        // Agar input empty hai
-        if (len == 0) {
-            System.out.println("");
+        // 2. BASE CASE
+        // Agar saare digits process ho gaye
+        // toh jo combination bana hai usko print karo
+        if (index == str.length()) {
+
+            System.out.println(current);
+
             return;
         }
+        // 3. CURRENT DIGIT NIKALO
+        // Example:
+        // str = "23", index = 0
+        // str.charAt(0) = '2'
+        // '2' - '0' = 2
+        int number = str.charAt(index) - '0';
 
-        bfs(0, len, new StringBuilder(), D);
-    }
 
-    public static void bfs(
-            int pos,
-            int len,
-            StringBuilder sb,
-            String D) {
+        // 4. CURRENT DIGIT KE LETTERS NIKALO
+        // number = 2
+        // keypad[2] = "abc"
+        String letters = keypad[number];
 
-        // Saare digits process ho gaye
-        if (pos == len) {
-            System.out.println(sb.toString());
-        } else {
 
-            // Current digit ke letters nikalo
-            char[] letters =
-                L[Character.getNumericValue(D.charAt(pos))];
+        // 5. LOOP
+        // "abc" ke har letter ko ek-ek karke try karo
+        for (int i = 0; i < letters.length(); i++) {
 
-            // Har letter ko try karo
-            for (int i = 0; i < letters.length; i++) {
 
-                bfs(
-                    pos + 1,
-                    len,
-                    new StringBuilder(sb).append(letters[i]),
-                    D
-                );
-            }
+            // 6. CURRENT LETTER NIKALO
+            // i=0 -> a
+            // i=1 -> b
+            // i=2 -> c
+            char ch = letters.charAt(i);
+
+
+            // 7. RECURSION
+            // Current letter ko answer me jodo
+            // aur NEXT digit par chale jao
+            //
+            // Example:
+            // current = ""
+            // ch = 'a'
+            // current + ch = "a"
+            //
+            // index 0 -> index 1
+            combinations(str, index + 1, current + ch);
         }
     }
 
+
     public static void main(String[] args) {
-        letterCombinations("2");
+
+        // 8. INPUT
+        String str = "23";
+
+
+        // 9. RECURSION START
+        // 0 = pehle digit se start
+        // "" = starting me combination empty hai
+        combinations(str, 0, "");
     }
 }

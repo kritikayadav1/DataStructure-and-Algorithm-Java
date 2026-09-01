@@ -1,82 +1,96 @@
-package Backtracking;
 public class SudokuSolver {
 
+    // Sudoku solve karne wala function
     public static boolean solveSudoku(int[][] board) {
 
-        // Empty cell dhundo
+        // STEP 1: Empty cell find karo
         for (int row = 0; row < 9; row++) {
 
             for (int col = 0; col < 9; col++) {
 
+                // 0 means empty cell
                 if (board[row][col] == 0) {
+                
+                    // STEP 2: 1 se 9 tak numbers try karo
+                    for (int num = 1; num <= 9; num++) {
 
-                    // 1 se 9 tak try karo
-                    for (int digit = 1; digit <= 9; digit++) {
+                        // STEP 3: Check karo number safe hai ya nahi
+                        if (isSafe(board, row, col, num)) {
 
-                        if (isSafe(board, row, col, digit)) {
-
-                            // PLACE
-                            board[row][col] = digit;
+                            // DO / PLACE
+                            board[row][col] = num;
 
                             // EXPLORE
+                            // Baaki Sudoku solve karke dekho
                             if (solveSudoku(board)) {
                                 return true;
                             }
 
-                            // UNDO
+                            // UNDO / BACKTRACK
+                            // Agar aage solution nahi mila
                             board[row][col] = 0;
                         }
                     }
 
-                    // Koi digit fit nahi hui
+                    // 1 se 9 tak koi bhi number kaam nahi kiya
                     return false;
                 }
             }
         }
 
-        // Pura board fill ho gaya
+        // Agar koi empty cell nahi mili
+        // Matlab Sudoku solve ho gaya
         return true;
     }
 
 
-    public static boolean isSafe(
-            int[][] board,
-            int row,
-            int col,
-            int digit) {
+    // Check karega ki num ko board[row][col] par rakh sakte hain ya nahi
+    public static boolean isSafe(int[][] board, int row, int col, int num) {
 
-        // Row check
+        // 1. ROW CHECK
         for (int j = 0; j < 9; j++) {
-            if (board[row][j] == digit) {
+
+            if (board[row][j] == num) {
                 return false;
             }
         }
 
-        // Column check
+
+        // 2. COLUMN CHECK
         for (int i = 0; i < 9; i++) {
-            if (board[i][col] == digit) {
+
+            if (board[i][col] == num) {
                 return false;
             }
         }
 
-        // 3x3 grid check
-        int sr = (row / 3) * 3;
-        int sc = (col / 3) * 3;
 
-        for (int i = sr; i < sr + 3; i++) {
+        // 3. 3x3 BOX CHECK
 
-            for (int j = sc; j < sc + 3; j++) {
+        // Current cell ka box kis row se start hota hai
+        int startRow = (row / 3) * 3;
 
-                if (board[i][j] == digit) {
+        // Current cell ka box kis column se start hota hai
+        int startCol = (col / 3) * 3;
+
+
+        for (int i = startRow; i < startRow + 3; i++) {
+
+            for (int j = startCol; j < startCol + 3; j++) {
+
+                if (board[i][j] == num) {
                     return false;
                 }
             }
         }
 
+
+        // Row, column aur box teeno me number nahi mila
         return true;
     }
 
 
+    // Board print karne ke liye
     public static void printBoard(int[][] board) {
 
         for (int i = 0; i < 9; i++) {
@@ -94,19 +108,31 @@ public class SudokuSolver {
     public static void main(String[] args) {
 
         int[][] board = {
-                {3,0,6,5,0,8,4,0,0},
-                {5,2,0,0,0,0,0,0,0},
-                {0,8,7,0,0,0,0,3,1},
-                {0,0,3,0,1,0,0,8,0},
-                {9,0,0,8,6,3,0,0,5},
-                {0,5,0,0,9,0,6,0,0},
-                {1,3,0,0,0,0,2,5,0},
-                {0,0,0,0,0,0,0,7,4},
-                {0,0,5,2,0,6,3,0,0}
+
+            {5, 3, 0, 0, 7, 0, 0, 0, 0},
+            {6, 0, 0, 1, 9, 5, 0, 0, 0},
+            {0, 9, 8, 0, 0, 0, 0, 6, 0},
+
+            {8, 0, 0, 0, 6, 0, 0, 0, 3},
+            {4, 0, 0, 8, 0, 3, 0, 0, 1},
+            {7, 0, 0, 0, 2, 0, 0, 0, 6},
+
+            {0, 6, 0, 0, 0, 0, 2, 8, 0},
+            {0, 0, 0, 4, 1, 9, 0, 0, 5},
+            {0, 0, 0, 0, 8, 0, 0, 7, 9}
         };
 
+
+        // Sudoku solve karo
         if (solveSudoku(board)) {
+
+            System.out.println("Solved Sudoku:");
+
             printBoard(board);
+
+        } else {
+
+            System.out.println("Sudoku cannot be solved.");
         }
     }
 }
