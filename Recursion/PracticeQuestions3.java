@@ -1,6 +1,6 @@
 package Recursion;
 
-public class PracticeQuestions2 {
+public class PracticeQuestions3 {
 
     public static int factorial(int n) {
 

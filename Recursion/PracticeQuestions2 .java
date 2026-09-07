@@ -1,6 +1,6 @@
 package Recursion;
 
-public class Questions {
+public class PracticeQuestions2 {
 
     public static int fib(int n) {
 
