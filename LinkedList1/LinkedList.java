@@ -2,122 +2,203 @@ package LinkedList1;
 
 public class LinkedList {
 
-    // Node class
-    // Har node ke andar data aur next hota hai
+    // Har Node ke andar data + next
     public static class Node {
-
-        int data;      // Node ki value
-        Node next;     // Next node ka reference
+        int data;
+        Node next;
 
         public Node(int data) {
-            this.data = data;   // Data store karo
-            this.next = null;   // Starting me next null rahega
+            this.data = data;
+            this.next = null;
         }
     }
 
-    // Head = first node
+    // First Node
     public static Node head;
 
-    // Tail = last node
+    // Last Node
     public static Node tail;
 
+    // Total number of Nodes
+    public static int size;
 
-    // ADD FIRST
-    // Naya node starting me add karega
+
+    // ================= ADD FIRST =================
     public void addFirst(int data) {
 
-        // Step 1: Naya node banao
+        // New Node banao
         Node newNode = new Node(data);
 
-        // Step 2: Agar list empty hai
+        // Ek Node add hua
+        size++;
+
+        // Agar list empty hai
         if (head == null) {
             head = tail = newNode;
             return;
         }
 
-        // Step 3:
-        // New node ka next = old head
+        // New Node ko old head se connect karo
         newNode.next = head;
 
-        // Step 4:
-        // New node ko head bana do
+        // New Node ko head banao
         head = newNode;
     }
 
 
-    // ADD LAST
-    // Naya node end me add karega
+    // ================= ADD LAST =================
     public void addLast(int data) {
 
-        // Step 1: Naya node banao
+        // New Node banao
         Node newNode = new Node(data);
 
-        // Step 2: Agar list empty hai
+        // Ek Node add hua
+        size++;
+
+        // Agar list empty hai
         if (head == null) {
             head = tail = newNode;
             return;
         }
 
-        // Step 3:
-        // Old tail ke next me new node lagao
+        // Old tail ko New Node se connect karo
         tail.next = newNode;
 
-        // Step 4:
-        // New node ko tail bana do
+        // New Node ko tail banao
         tail = newNode;
     }
 
 
-    // ADD AT MIDDLE / GIVEN INDEX
-    // Kisi particular index par node add karega
+    // ================= ADD MIDDLE =================
     public void addMiddle(int idx, int data) {
 
-        // Agar index 0 hai
-        // to directly addFirst kar do
+        // Agar index 0 hai to Add First
         if (idx == 0) {
             addFirst(data);
             return;
         }
 
-        // Step 1: Naya node banao
+        // New Node banao
         Node newNode = new Node(data);
 
-        // Step 2:
-        // Temp ko head se start karo
-        Node temp = head;
+        // Ek Node add hua
+        size++;
 
+        // Temp head se start karega
+        Node temp = head;
         int i = 0;
 
-        // Step 3:
-        // Temp ko idx - 1 tak le jao
+        // Temp ko idx - 1 tak lekar jao
         while (i < idx - 1) {
             temp = temp.next;
             i++;
         }
 
-        // Step 4:
-        // New node ko next node se connect karo
+        // New Node ko next Node se connect karo
         newNode.next = temp.next;
 
-        // Step 5:
-        // Previous node ko new node se connect karo
+        // Previous Node ko New Node se connect karo
         temp.next = newNode;
     }
 
 
-    // PRINT LINKED LIST
+    // ================= REMOVE FIRST =================
+    public int removeFirst() {
+
+        // Case 1: List already empty hai
+        if (size == 0) {
+            System.out.println("Linked List is empty");
+            return Integer.MIN_VALUE;
+        }
+
+        // Case 2: Sirf ek Node hai
+        if (size == 1) {
+
+            // Remove hone wali value save karo
+            int val = head.data;
+
+            // Ek hi Node tha, remove hone ke baad list empty
+            head = tail = null;
+
+            // Ab 0 Nodes hain
+            size = 0;
+
+            return val;
+        }
+
+        // Case 3: Multiple Nodes hain
+
+        // First Node ki value save karo
+        int val = head.data;
+
+        // Head ko second Node par shift karo
+        head = head.next;
+
+        // Ek Node kam ho gaya
+        size--;
+
+        return val;
+    }
+public int removeLast() {
+
+    // Case 1: Agar Linked List empty hai
+    if (size == 0) {
+        System.out.println("Linked List is empty");
+        return Integer.MIN_VALUE;
+    }
+
+    // Case 2: Agar sirf 1 Node hai
+    if (size == 1) {
+
+        // Remove hone wali value save karo
+        int val = head.data;
+
+        // Ek hi Node tha, isliye head aur tail dono null
+        head = tail = null;
+
+        // Ab koi Node nahi bacha
+        size = 0;
+
+        // Removed value return karo
+        return val;
+    }
+
+    // Case 3: Agar multiple Nodes hain
+
+    // prev ko head se start karo
+    Node prev = head;
+
+    int i = 0;
+
+    // prev ko second-last Node tak le jao
+    while (i < size - 2) {
+        prev = prev.next;
+        i++;
+    }
+
+    // Purane tail ki value save karo
+    int val = tail.data;
+
+    // Second-last Node ko new tail banao
+    tail = prev;
+
+    // New tail ke aage ka connection hata do
+    tail.next = null;
+
+    // Ek Node remove hua
+    size--;
+
+    // Removed value return karo
+    return val;
+}
+
+    // ================= PRINT =================
     public void print() {
 
-        // Temp ko head se start karo
         Node temp = head;
 
-        // Jab tak temp null nahi hota
         while (temp != null) {
-
-            // Current node ka data print karo
             System.out.print(temp.data + " -> ");
-
-            // Temp ko next node par le jao
             temp = temp.next;
         }
 
@@ -125,27 +206,37 @@ public class LinkedList {
     }
 
 
+    // ================= MAIN =================
     public static void main(String[] args) {
 
         LinkedList ll = new LinkedList();
 
-        // Add First
-        ll.addFirst(10);
-        ll.addFirst(20);
-        ll.addFirst(30);
-        // Ab list:
-        // 30 -> 20 -> 10 -> null
-        // Add Last
-        ll.addLast(40);
+        ll.addFirst(10);      // size = 1
+        ll.addFirst(20);      // size = 2
+        ll.addFirst(30);      // size = 3
 
-        // Ab list:
-        // 30 -> 20 -> 10 -> 40 -> null
-        // Add Middle
-        // Index 2 par 21 add karenge
-        ll.addMiddle(2, 21);
-        // Final list:
-        // 30 -> 20 -> 21 -> 10 -> 40 -> null
-        // Print list
+        ll.addLast(40);       // size = 4
+
+        ll.addMiddle(2, 11);  // size = 5
+
+        // 30 -> 20 -> 21 -> 10 -> 40
         ll.print();
+
+        System.out.println("Size = " + size);
+
+        // First Node remove hoga = 30
+        System.out.println("Removed First= " + ll.removeFirst());
+
+        // 20 -> 21 -> 10 -> 40
+        ll.print();
+
+        System.out.println("Size = " + size);
+        ll.print();
+
+System.out.println("Removed Last = " + ll.removeLast());
+
+ll.print();
+
+System.out.println("Size = " + size);
     }
 }
