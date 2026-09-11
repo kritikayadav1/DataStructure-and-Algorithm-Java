@@ -192,6 +192,51 @@ public int removeLast() {
     return val;
 }
 
+    // ================= SEARCH =================
+    public int iterativeSearch(int key){
+Node temp=head;
+int i=0;
+while(temp!=null){
+    if(temp.data==key){
+        return i;
+    }
+    temp=temp.next;
+    i++;
+}
+return -1;
+    }
+
+        // ================= RECURSIVE =================
+
+    public int recursiveSearch(int key) {
+    return helper(head, key);
+}
+
+public int helper(Node head, int key) {
+
+    // List khatam ho gayi
+    if (head == null) {
+        return -1;
+    }
+
+    // Current node par key mil gayi
+    if (head.data == key) {
+        return 0;
+    }
+                                      
+    // Next node me search karo
+    int idx = helper(head.next, key);
+
+    // Aage bhi nahi mili
+    if (idx == -1) {
+        return -1;
+    }
+
+    // Current node ki wajah se 1 add karo
+    return idx + 1;
+}
+
+
     // ================= PRINT =================
     public void print() {
 
@@ -238,5 +283,8 @@ System.out.println("Removed Last = " + ll.removeLast());
 ll.print();
 
 System.out.println("Size = " + size);
+System.out.println(ll.iterativeSearch(30));
+System.out.println(ll.recursiveSearch(30));
+
     }
 }
