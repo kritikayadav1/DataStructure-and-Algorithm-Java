@@ -26,6 +26,19 @@ public class CircularLinkedList {
     head = newNode;
     tail.next = head;
 }
+public void addLast(int data) {
+    Node newNode = new Node(data);
+
+    if (head == null) {
+        head = tail = newNode;
+        tail.next = head;
+        return;
+    }
+
+    tail.next = newNode;
+    tail = newNode;
+    tail.next = head;
+}
 
     public void print() {
         if (head == null) {
@@ -48,5 +61,9 @@ public static void main(String[] args) {
     cll.addFirst(20);
     cll.addFirst(10);
 
+    cll.addLast(30);
+    cll.addLast(40);
+
     cll.print();
-}}
+}
+}
