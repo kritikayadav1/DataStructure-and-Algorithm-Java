@@ -72,6 +72,29 @@ public void addLast(int data) {
 
     return value;
 }
+public int removeLast() {
+    if (head == null) {
+        return -1;
+    }
+
+    int value = tail.data;
+
+    if (head == tail) {
+        head = tail = null;
+        return value;
+    }
+
+    Node temp = head;
+
+    while (temp.next != tail) {
+        temp = temp.next;
+    }
+
+    tail = temp;
+    tail.next = head;
+
+    return value;
+}
 public static void main(String[] args) {
     CircularLinkedList cll = new CircularLinkedList();
 
@@ -82,6 +105,9 @@ public static void main(String[] args) {
 
     cll.print();
 
-    System.out.println("Removed: " + cll.removeFirst());
+    System.out.println("Removed from first: " + cll.removeFirst());
+    cll.print();
+
+    System.out.println("Removed from last: " + cll.removeLast());
     cll.print();
 }
