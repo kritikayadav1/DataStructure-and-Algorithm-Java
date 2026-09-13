@@ -55,15 +55,33 @@ public void addLast(int data) {
 
         System.out.println("HEAD");
     }
+    public int removeFirst() {
+    if (head == null) {
+        return -1;
+    }
+
+    int value = head.data;
+
+    if (head == tail) {
+        head = tail = null;
+        return value;
+    }
+
+    head = head.next;
+    tail.next = head;
+
+    return value;
+}
 public static void main(String[] args) {
     CircularLinkedList cll = new CircularLinkedList();
 
     cll.addFirst(20);
     cll.addFirst(10);
-
     cll.addLast(30);
     cll.addLast(40);
 
     cll.print();
-}
+
+    System.out.println("Removed: " + cll.removeFirst());
+    cll.print();
 }
