@@ -100,23 +100,17 @@ public class isPalidrome {
         System.out.println("null");
     }
 
+public static void main(String[] args) {
 
-    // Main
-    public static void main(String[] args) {
+    isPalidrome ll = new isPalidrome();
 
-        k ll = new k();
+    ll.addLast(1);
+    ll.addLast(2);
+    ll.addLast(3);
+    ll.addLast(2);
+    ll.addLast(1);
 
-        // Palindrome Linked List
-        ll.addLast(1);
-        ll.addLast(2);
-        ll.addLast(3);
-        ll.addLast(2);
-        ll.addLast(1);
+    ll.print();
 
-        // 1 -> 2 -> 3 -> 2 -> 1
-
-        ll.print();
-
-        System.out.println("Palindrome = " + ll.checkPalindrome());
-    }
-}
+    System.out.println("Palindrome = " + ll.checkPalindrome());
+}}
