@@ -1,42 +1,97 @@
 package LinkedList1;
-public class RemoveCycle {
-public static class  Node {
-int data;
-Node next; 
 
-public Node(int data){
-    this.data=data;
-    this.next=null;
-}}
+public class RemoveCycle {
+
+    public static class Node {
+        int data;
+        Node next;
+
+        public Node(int data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
 
     public static Node head;
 
-public static boolean removeCyble(){
-Node slow= head;
-Node fast=head;
-while(fast!= null&& fast.next!= null){
-    slow=slow.next;
-    fast=fast.next.next;
-    if(slow==fast){
-        return true;
+    public static void removeCycle() {
+
+        // Step 1: Detect Cycle
+        Node slow = head;
+        Node fast = head;
+        boolean cycle = false;
+
+        while (fast != null && fast.next != null) {
+
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if (slow == fast) {
+                cycle = true;
+                break;
+            }
+        }
+
+        // Cycle nahi mili
+        if (cycle == false) {
+            return;
+        }
+
+        // Step 2: Cycle ka starting point find karo
+        slow = head;
+        Node prev = null;
+
+        while (slow != fast) {
+
+            prev = fast;
+
+            slow = slow.next;
+            fast = fast.next;
+        }
+
+        // Step 3: Cycle remove
+        prev.next = null;
     }
-}
-return false; 
-}
-public static void main(String [] args){
-    head=  new Node(1);
-    Node second= new Node(2);
-    Node third =new Node (3);
-    Node fourth = new Node(4);
-    Node fifth= new Node(5);
 
+    public static boolean isCycle() {
 
+        Node slow = head;
+        Node fast = head;
 
-    head.next= second;
-     second.next=third;
-     third.next=fourth;
-     fourth.next =fifth;
-     fifth.next = second;
-     System.out.println(removeCyble());
-}
+        while (fast != null && fast.next != null) {
+
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if (slow == fast) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static void main(String[] args) {
+
+        head = new Node(1);
+
+        Node second = new Node(2);
+        Node third = new Node(3);
+        Node fourth = new Node(4);
+        Node fifth = new Node(5);
+
+        head.next = second;
+        second.next = third;
+        third.next = fourth;
+        fourth.next = fifth;
+
+        // Cycle create: 5 -> 2
+        fifth.next = second;
+
+        System.out.println("Before Remove: " + isCycle());
+
+        removeCycle();
+
+        System.out.println("After Remove: " + isCycle());
+    }
 }
