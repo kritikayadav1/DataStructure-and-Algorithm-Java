@@ -66,6 +66,27 @@ public class DoublyLinkedList {
         return value;
     }
 
+    public int removeLast() {
+        if (tail == null) {
+            System.out.println("Doubly Linked List is empty");
+            return Integer.MIN_VALUE;
+        }
+
+        if (head.next == null) {
+            int value = tail.data;
+            head = tail = null;
+            size--;
+            return value;
+        }
+
+        int value = tail.data;
+        tail = tail.previous;
+        tail.next = null;
+        size--;
+
+        return value;
+    }
+
     public void printList() {
         Node temp = head;
 
@@ -87,8 +108,10 @@ public class DoublyLinkedList {
 
         list.printList();
 
-        System.out.println("Removed: " + list.removeFirst());
+        System.out.println("Removed from first: " + list.removeFirst());
+        list.printList();
 
+        System.out.println("Removed from last: " + list.removeLast());
         list.printList();
     }
 }
