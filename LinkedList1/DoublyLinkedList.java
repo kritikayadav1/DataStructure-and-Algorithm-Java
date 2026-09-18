@@ -1,4 +1,3 @@
-package LinkedList1;
 public class DoublyLinkedList {
 
     public class Node {
@@ -31,6 +30,20 @@ public class DoublyLinkedList {
         head = newNode;
     }
 
+    public void addLast(int data) {
+        Node newNode = new Node(data);
+        size++;
+
+        if (head == null) {
+            head = tail = newNode;
+            return;
+        }
+
+        tail.next = newNode;
+        newNode.previous = tail;
+        tail = newNode;
+    }
+
     public void printList() {
         Node temp = head;
 
@@ -45,9 +58,11 @@ public class DoublyLinkedList {
     public static void main(String[] args) {
         DoublyLinkedList list = new DoublyLinkedList();
 
-        list.addFirst(3);
         list.addFirst(2);
         list.addFirst(1);
+
+        list.addLast(3);
+        list.addLast(4);
 
         list.printList();
     }
