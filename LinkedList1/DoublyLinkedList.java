@@ -1,3 +1,4 @@
+package LinkedList1;
 public class DoublyLinkedList {
 
     public class Node {
@@ -44,6 +45,27 @@ public class DoublyLinkedList {
         tail = newNode;
     }
 
+    public int removeFirst() {
+        if (head == null) {
+            System.out.println("Doubly Linked List is empty");
+            return Integer.MIN_VALUE;
+        }
+
+        if (head.next == null) {
+            int value = head.data;
+            head = tail = null;
+            size--;
+            return value;
+        }
+
+        int value = head.data;
+        head = head.next;
+        head.previous = null;
+        size--;
+
+        return value;
+    }
+
     public void printList() {
         Node temp = head;
 
@@ -60,9 +82,12 @@ public class DoublyLinkedList {
 
         list.addFirst(2);
         list.addFirst(1);
-
         list.addLast(3);
         list.addLast(4);
+
+        list.printList();
+
+        System.out.println("Removed: " + list.removeFirst());
 
         list.printList();
     }
