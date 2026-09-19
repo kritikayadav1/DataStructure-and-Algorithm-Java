@@ -86,6 +86,23 @@ public class DoublyLinkedList {
 
         return value;
     }
+    public void reverse() {
+    Node current = head;
+    Node temp;
+
+    while (current != null) {
+        temp = current.next;
+
+        current.next = current.previous;
+        current.previous = temp;
+
+        current = temp;
+    }
+
+    temp = head;
+    head = tail;
+    tail = temp;
+}
 
     public void printList() {
         Node temp = head;
@@ -99,19 +116,18 @@ public class DoublyLinkedList {
     }
 
     public static void main(String[] args) {
-        DoublyLinkedList list = new DoublyLinkedList();
+    DoublyLinkedList list = new DoublyLinkedList();
 
-        list.addFirst(2);
-        list.addFirst(1);
-        list.addLast(3);
-        list.addLast(4);
+    list.addFirst(2);
+    list.addFirst(1);
+    list.addLast(3);
+    list.addLast(4);
 
-        list.printList();
+    System.out.println("Original list:");
+    list.printList();
 
-        System.out.println("Removed from first: " + list.removeFirst());
-        list.printList();
+    list.reverse();
 
-        System.out.println("Removed from last: " + list.removeLast());
-        list.printList();
-    }
-}
+    System.out.println("Reversed list:");
+    list.printList();
+}}
